@@ -81,6 +81,7 @@ async function main() {
     const numberOfRuns = 30;
     const indexArray = Array.from(Array(numberOfRuns).keys())
     for (const index of indexArray) {
+        console.log(`starting run: ${index}`);
         await addAndDeleteRun(index);
     }
     const totalAddAverage = addResultsTotalBeforeAverage / numberOfRuns;

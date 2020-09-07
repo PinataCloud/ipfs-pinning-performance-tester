@@ -24,6 +24,7 @@ async function addAndDeleteRun (runIndex) {
     let averageAddTime = 0;
     let averageDeleteTime = 0;
     const files = fs.readdirSync(directoryPath);
+    console.log('files:', files);
     const addPromises = [];
     //listing all files
     const listOfCIDs = [];

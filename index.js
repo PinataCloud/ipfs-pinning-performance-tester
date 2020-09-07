@@ -24,55 +24,37 @@ async function addAndDeleteRun (runIndex) {
     let averageAddTime = 0;
     let averageDeleteTime = 0;
     const files = fs.readdirSync(directoryPath);
-    const addPromises = [];
     //listing all files
     const listOfCIDs = [];
     for (const file of files) {
-        addPromises.push(new Promise(async function(resolve, reject) {
-            try {
-                const t0 = performance.now();
-                const results = await ipfs.add(globSource(`./testFiles/${file}`));
-                const t1 = performance.now();
-                const combinedTime = t1 - t0;
-                listOfCIDs.push(results.cid.string);
-                totalAddTime = combinedTime + totalAddTime;
-                console.log('file add time:', combinedTime);
-                resolve('success');
-            } catch(err) {
-                console.log(err);
-                reject(err);
-            }
-        }));
+        try {
+            const t0 = performance.now();
+            const results = await ipfs.add(globSource(`./testFiles/${file}`));
+            const t1 = performance.now();
+            const combinedTime = t1 - t0;
+            listOfCIDs.push(results.cid.string);
+            totalAddTime = combinedTime + totalAddTime;
+            console.log('file add time:', combinedTime);
+        } catch(err) {
+            console.log(err);
+        }
     }
-    await Promise.all(addPromises).then((result) => {
-        averageAddTime = totalAddTime / files.length;
-    }).catch((err) => {
-        console.log(err);
-    });
+    averageAddTime = totalAddTime / files.length;
 
-
-    const deletePromises = [];
     for (const cid of listOfCIDs) {
-        deletePromises.push(new Promise(async function(resolve, reject) {
-            try {
-                const t0 = performance.now();
-                const results = await ipfs.pin.rm(cid);
-                const t1 = performance.now();
-                const combinedTime = t1 - t0;
-                totalDeleteTime = combinedTime + totalDeleteTime;
-                console.log('file delete time:', combinedTime);
-                resolve('success');
-            } catch(err) {
-                console.log(err);
-                reject(err);
-            }
-        }));
+        try {
+            const t0 = performance.now();
+            const results = await ipfs.pin.rm(cid);
+            const t1 = performance.now();
+            const combinedTime = t1 - t0;
+            totalDeleteTime = combinedTime + totalDeleteTime;
+            console.log('file delete time:', combinedTime);
+        } catch(err) {
+            console.log(err);
+        }
     }
-    await Promise.all(deletePromises).then((result) => {
-        averageDeleteTime = totalDeleteTime / files.length;
-    }).catch((err) => {
-        console.log(err);
-    });
+    averageDeleteTime = totalDeleteTime / files.length;
+
     addResultsTotalBeforeAverage = addResultsTotalBeforeAverage + averageAddTime;
     deleteResultsTotalBeforeAverage = deleteResultsTotalBeforeAverage + averageDeleteTime;
     console.log(`Index ${runIndex} - Average Add Time: ${averageAddTime} ms`);
@@ -80,7 +62,7 @@ async function addAndDeleteRun (runIndex) {
 }
 
 async function main() {
-    const numberOfRuns = 10;
+    const numberOfRuns = 5;
     const indexArray = Array.from(Array(numberOfRuns).keys())
     for (const index of indexArray) {
         console.log(`starting run: ${index}`);

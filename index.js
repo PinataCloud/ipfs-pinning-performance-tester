@@ -36,7 +36,7 @@ async function addAndDeleteRun (runIndex) {
                 const combinedTime = t1 - t0;
                 listOfCIDs.push(results.cid.string);
                 totalAddTime = combinedTime + totalAddTime;
-                console.log('file add time:', totalAddTime);
+                console.log('file add time:', combinedTime);
                 resolve('success');
             } catch(err) {
                 console.log(err);
@@ -60,7 +60,7 @@ async function addAndDeleteRun (runIndex) {
                 const t1 = performance.now();
                 const combinedTime = t1 - t0;
                 totalDeleteTime = combinedTime + totalDeleteTime;
-                console.log('file delete time:', totalDeleteTime);
+                console.log('file delete time:', combinedTime);
                 resolve('success');
             } catch(err) {
                 console.log(err);

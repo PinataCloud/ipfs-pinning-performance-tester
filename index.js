@@ -24,7 +24,6 @@ async function addAndDeleteRun (runIndex) {
     let averageAddTime = 0;
     let averageDeleteTime = 0;
     const files = fs.readdirSync(directoryPath);
-    console.log('files:', files);
     const addPromises = [];
     //listing all files
     const listOfCIDs = [];
@@ -37,6 +36,7 @@ async function addAndDeleteRun (runIndex) {
                 const combinedTime = t1 - t0;
                 listOfCIDs.push(results.cid.string);
                 totalAddTime = combinedTime + totalAddTime;
+                console.log('file add time:', totalAddTime);
                 resolve('success');
             } catch(err) {
                 console.log(err);
@@ -60,6 +60,7 @@ async function addAndDeleteRun (runIndex) {
                 const t1 = performance.now();
                 const combinedTime = t1 - t0;
                 totalDeleteTime = combinedTime + totalDeleteTime;
+                console.log('file delete time:', totalDeleteTime);
                 resolve('success');
             } catch(err) {
                 console.log(err);
@@ -79,7 +80,7 @@ async function addAndDeleteRun (runIndex) {
 }
 
 async function main() {
-    const numberOfRuns = 30;
+    const numberOfRuns = 10;
     const indexArray = Array.from(Array(numberOfRuns).keys())
     for (const index of indexArray) {
         console.log(`starting run: ${index}`);

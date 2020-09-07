@@ -1,0 +1,22 @@
+{
+  "name": "ipfs-pinning-performance-tester",
+  "version": "1.0.0",
+  "description": "Script to test and time the rapid pinning / unpinning of content against a node.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PinataCloud/ipfs-pinning-performance-tester.git"
+  },
+  "author": "Matt Ober",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PinataCloud/ipfs-pinning-performance-tester/issues"
+  },
+  "homepage": "https://github.com/PinataCloud/ipfs-pinning-performance-tester#readme",
+  "dependencies": {
+    "ipfs-http-client": "^46.0.1"
+  }
+}
